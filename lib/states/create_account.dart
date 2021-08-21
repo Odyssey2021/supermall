@@ -43,7 +43,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
-    //ประกาศค่าตัวแปรขนาดหน้า
+    //ประกาศค่าตัวแปรขนาดหน้าจอมือถือ
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
