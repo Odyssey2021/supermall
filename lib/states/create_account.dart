@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingmall/utility/my_constant.dart';
+import 'package:shoppingmall/widgets/show_image.dart';
 import 'package:shoppingmall/widgets/show_title.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -186,10 +187,47 @@ class _CreateAccountState extends State<CreateAccount> {
             buildAddress(size),
             buildPhone(size),
             buildUser(size),
-            buildPassword(size)
+            buildPassword(size),
+            buildTitle('รูปภาพ'),
+            buildSubTitle(),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.add_a_photo,
+                    size: 36,
+                    color: MyConstant.dark,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 16),
+                  width: size * 0.5,
+                  child: ShowImage(path: MyConstant.avartar),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.add_photo_alternate,
+                    size: 36,
+                    color: MyConstant.dark,
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  ShowTitle buildSubTitle() {
+    return ShowTitle(
+      title:
+          'รูปภาพแสดงตัวตนของ User (แต่ถ้าไม่สะดวกจะแชร์ภาพ เราจะแสดงภาพ default แทน)',
+      textstyle: MyConstant().h3Style(),
     );
   }
 
