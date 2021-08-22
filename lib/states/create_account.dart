@@ -203,7 +203,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Future<Null> chooseImage(ImageSource source) async {
     try {
-      var result = await ImagePicker().pickImage(
+      var result = await ImagePicker().getImage(
         source: source,
         maxWidth: 800,
         maxHeight: 800,
@@ -220,7 +220,7 @@ class _CreateAccountState extends State<CreateAccount> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () => chooseImage(ImageSource.camera),
           icon: Icon(
             Icons.add_a_photo,
             size: 36,
@@ -235,7 +235,7 @@ class _CreateAccountState extends State<CreateAccount> {
               : Image.file(file!),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () => chooseImage(ImageSource.gallery),
           icon: Icon(
             Icons.add_photo_alternate,
             size: 36,
