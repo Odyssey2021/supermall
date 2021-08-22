@@ -203,7 +203,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Future<Null> chooseImage(ImageSource source) async {
     try {
-      var result = await ImagePicker().getImage(
+      var result = await ImagePicker().pickImage(
         source: source,
         maxWidth: 800,
         maxHeight: 800,
