@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoppingmall/utility/my_constant.dart';
 import 'package:shoppingmall/utility/my_dialog.dart';
@@ -269,8 +270,16 @@ class _CreateAccountState extends State<CreateAccount> {
 
   Widget buildMap() => Container(
         width: double.infinity,
-        height: 200,
-        child: lat == null ? ShowProgress() : Text('Lat=$lat,Lng=$lng'),
+        height: 300,
+        child: lat == null
+            ? ShowProgress()
+            : GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(lat!, lng!),
+                  zoom: 16,
+                ),
+                onMapCreated: (controller) {},
+              ),
       );
 
   Future<Null> chooseImage(ImageSource source) async {
