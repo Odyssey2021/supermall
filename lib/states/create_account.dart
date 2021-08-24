@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
   File? file;
+  double? lat, lng;
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _CreateAccountState extends State<CreateAccount> {
           MyDialog().alertLocationService(
               context, 'ไม่อนุญาตแชร์ Location', 'โปรดแชร์ Location');
         } else {
-          // Find LatLng
+          findLatLng();
         }
       } else {
         if (locationPermission == LocationPermission.deniedForever) {
@@ -48,12 +50,33 @@ class _CreateAccountState extends State<CreateAccount> {
               context, 'ไม่อนุญาตแชร์ Location', 'โปรดแชร์ Location');
         } else {
           //Find LaLng
+          findLatLng();
         }
       }
     } else {
       print('Service Location Close');
       MyDialog().alertLocationService(context, 'Location Service ปิดอยู่ ?',
           'กรุณาเปิด Location Service ด้วยครับ');
+    }
+  }
+
+  Future<Null> findLatLng() async {
+    print('findLaLng worked');
+    Position? position = await findPosition();
+    setState(() {
+      lat = position!.latitude;
+      lng = position.longitude;
+      print('lat=$lat , lng=$lng');
+    });
+  }
+
+  Future<Position?> findPosition() async {
+    Position position;
+    try {
+      position = await Geolocator.getCurrentPosition();
+      return position;
+    } catch (e) {
+      return null;
     }
   }
 
