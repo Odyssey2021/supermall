@@ -268,6 +268,15 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
+  Set<Marker> setMarker() => <Marker>[
+        Marker(
+          markerId: MarkerId('id'),
+          position: LatLng(lat!, lng!),
+          infoWindow: InfoWindow(
+              title: 'คุณอยู่ที่นี่', snippet: 'Lat =$lat, lng=$lng'),
+        ),
+      ].toSet();
+
   Widget buildMap() => Container(
         width: double.infinity,
         height: 300,
@@ -279,6 +288,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   zoom: 16,
                 ),
                 onMapCreated: (controller) {},
+                markers: setMarker(),
               ),
       );
 
