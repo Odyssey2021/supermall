@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shoppingmall/utility/my_constant.dart';
 import 'package:shoppingmall/utility/my_dialog.dart';
 import 'package:shoppingmall/widgets/show_image.dart';
+import 'package:shoppingmall/widgets/show_progress.dart';
 import 'package:shoppingmall/widgets/show_title.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -258,11 +259,19 @@ class _CreateAccountState extends State<CreateAccount> {
             buildTitle('รูปภาพ'),
             buildSubTitle(),
             buildAvartar(size),
+            buildTitle('แสดงพิกัดที่คุณอยู่'),
+            buildMap(),
           ],
         ),
       ),
     );
   }
+
+  Widget buildMap() => Container(
+        width: double.infinity,
+        height: 200,
+        child: lat == null ? ShowProgress() : Text('Lat=$lat,Lng=$lng'),
+      );
 
   Future<Null> chooseImage(ImageSource source) async {
     try {
