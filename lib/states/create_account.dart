@@ -22,19 +22,38 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   void initState() {
     super.initState();
-    findLatLng();
+    checkPermission();
   }
 
-  Future<Null> findLatLng() async {
+  Future<Null> checkPermission() async {
     bool locationService;
     LocationPermission locationPermission;
 
     locationService = await Geolocator.isLocationServiceEnabled();
     if (locationService) {
       print('Service Location Open');
+
+      locationPermission = await Geolocator.checkPermission();
+      if (locationPermission == LocationPermission.denied) {
+        locationPermission = await Geolocator.requestPermission();
+        if (locationPermission == LocationPermission.deniedForever) {
+          MyDialog().alertLocationService(
+              context, 'ไม่อนุญาตแชร์ Location', 'โปรดแชร์ Location');
+        } else {
+          // Find LatLng
+        }
+      } else {
+        if (locationPermission == LocationPermission.deniedForever) {
+          MyDialog().alertLocationService(
+              context, 'ไม่อนุญาตแชร์ Location', 'โปรดแชร์ Location');
+        } else {
+          //Find LaLng
+        }
+      }
     } else {
       print('Service Location Close');
-      MyDialog().alertLocationService(context);
+      MyDialog().alertLocationService(context, 'Location Service ปิดอยู่ ?',
+          'กรุณาเปิด Location Service ด้วยครับ');
     }
   }
 
