@@ -231,6 +231,7 @@ class _CreateAccountState extends State<CreateAccount> {
             margin: EdgeInsets.only(top: 16),
             width: size * 0.6,
             child: TextFormField(
+              keyboardType: TextInputType.phone,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'กรุณากรอกหมายเลขโทรศัพท์ด้วยครับ';
@@ -264,12 +265,7 @@ class _CreateAccountState extends State<CreateAccount> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {}
-            },
-            icon: Icon(Icons.cloud_upload),
-          ),
+          buildCreateNewAccount(),
         ],
         title: Text('Create New Account'),
         backgroundColor: MyConstant.primary,
@@ -303,6 +299,23 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
         ),
       ),
+    );
+  }
+
+  IconButton buildCreateNewAccount() {
+    return IconButton(
+      onPressed: () {
+        if (formKey.currentState!.validate()) {
+          if (typeUser == null) {
+            print('Non Choose Type User');
+            MyDialog().normalDialog(context, 'ยังไม่ได้เลือกชนิดของ User',
+                'กรุณา tap ชนิด User ที่ต้องการ');
+          } else {
+            print('Process Insert to Database');
+          }
+        }
+      },
+      icon: Icon(Icons.cloud_upload),
     );
   }
 
