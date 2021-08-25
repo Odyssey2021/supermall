@@ -64,12 +64,12 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   Future<Null> findLatLng() async {
-    print('findLaLng worked');
+    // print('findLaLng worked');
     Position? position = await findPosition();
     setState(() {
       lat = position!.latitude;
       lng = position.longitude;
-      print('lat=$lat , lng=$lng');
+      // print('lat=$lat , lng=$lng');
     });
   }
 
@@ -309,7 +309,7 @@ class _CreateAccountState extends State<CreateAccount> {
           if (typeUser == null) {
             print('Non Choose Type User');
             MyDialog().normalDialog(context, 'ยังไม่ได้เลือกชนิดของ User',
-                'กรุณา tap ชนิด User ที่ต้องการ');
+                'กรุณา Tap ชนิด User ที่ต้องการ');
           } else {
             print('Process Insert to Database');
           }
