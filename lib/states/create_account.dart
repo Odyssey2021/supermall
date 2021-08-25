@@ -1,5 +1,6 @@
 // import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
+  String avatar = '';
   File? file;
   double? lat, lng;
   final formKey = GlobalKey<FormState>();
@@ -341,15 +343,38 @@ class _CreateAccountState extends State<CreateAccount> {
         '## name = $name,address=$address,phone=$phone,user=$user,password=$password');
     String path =
         '${MyConstant.domain}/shoppingmall/getUserWhereUser.php?isAdd=true&user=$user';
-    await Dio().get(path).then((value) {
+    await Dio().get(path).then((value) async {
       print('#value >>> $value');
       if (value.toString() == 'null') {
         print('##user นี้สามารถใช้งานได้ ไม่ซ้ำกับ user อื่น');
+        if (file == null) {
+          // no avatar
+          processInsertMySQL();
+        } else {
+          // avatar exits
+          print('### Process Upload Avatar');
+          String apiSaveAvatar =
+              '${MyConstant.domain}/shoppingmall/saveAvatar.php';
+          int i = Random().nextInt(1000000);
+          String nameAvatar = 'avatar$i.jpg';
+          Map<String, dynamic> map = Map();
+          map['file'] =
+              await MultipartFile.fromFile(file!.path, filename: nameAvatar);
+          FormData data = FormData.fromMap(map);
+          await Dio().post(apiSaveAvatar, data: data).then((value) {
+            avatar = '/shoppingmall/avatar/$nameAvatar';
+            processInsertMySQL();
+          });
+        }
       } else {
         MyDialog().normalDialog(context, 'มีผู้ใช้ user นี้อยู่แล้ว ?',
             'กรุณาใช้ชื่อ user อื่นที่ไม่ซ้ำกัน');
       }
     });
+  }
+
+  Future<Null> processInsertMySQL() async {
+    print('## processInsertMySQL working and avatar =>> $avatar');
   }
 
   Set<Marker> setMarker() => <Marker>[
